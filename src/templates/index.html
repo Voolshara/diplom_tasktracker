@@ -1,64 +1,149 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
+  <head>
+    <meta charset="utf-8" />
     <title>Checklist</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-
-</head>
-<body class="container">
-{% block navbar %}
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand mx-3" href="#">Ассистент</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
+    <script
+      type="text/javascript"
+      src="https://www.tutorialspoint.com/jquery/jquery-3.6.0.js"
+    ></script>
+  </head>
+  <body class="container">
+    {% block navbar %}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand mx-3" href="#">Ассистент</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
         <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link active" href="{{ url_for('index') }}">Задачи</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('archive') }}">Архив задач</a>
-            </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="{{ url_for('index') }}">Задачи</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('archive') }}">Архив задач</a>
+          </li>
         </ul>
-    </div>
-</nav>
-{% endblock %}
+      </div>
+    </nav>
+    {% endblock %}
 
+    <h1 class="text-center my-3">Список задач</h1>
+    <div
+      class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center my-3 border-bottom"
+    ></div>
+    <form class="input-group mb-3" action="/new" method="post">
+      <input
+        class="btn btn-outline-primary btn-sm"
+        type="submit"
+        value="Добавить задачу"
+      />
+      <input
+        class="form-control"
+        placeholder="Описание задачи"
+        type="text"
+        name="task"
+      />
+    </form>
+    <div
+      class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center my-3 border-bottom"
+    ></div>
+    <ul class="list-group mb-5">
+      {% for task in tasks %}
+      <form id="addInfoForm" action="/add_info" method="post">
+        <li class="list-group-item mb-3">
+          <p class="taskName">{{ task }}</p>
+          <a
+            class="btn btn-outline-success btn-sm float-end"
+            href="/complete/{{ loop.index0 }}"
+            >Отметить как выполненное</a
+          >
+        </li>
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="phone">Телефон</span>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Найденный телефон"
+            aria-describedby="phone"
+            name="phone"
+          />
+          <span class="input-group-text" id="email">E-mail</span>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Найденный e-mail"
+            aria-describedby="email"
+            name="email"
+          />
+          <span class="input-group-text" id="nickname">Nickname</span>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Найденный nickname"
+            aria-describedby="nickname"
+            name="Nickname"
+          />
+          <span class="input-group-text" id="name">Ф.И.О.</span>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Найденное Ф.И.О."
+            aria-describedby="name"
+            name="name"
+          />
+        </div>
+        <div class="input-group mb-3">
+          <span
+            class="input-group-text text-wrap"
+            style="width: 10rem"
+            id="addinfo"
+            >Дополнительная информация</span
+          >
+          <textarea
+            type="text"
+            rows="4"
+            class="form-control"
+            placeholder="Дополнительная информация"
+            aria-describedby="addinfo"
+            name="addinfo"
+          ></textarea>
+        </div>
+        <input
+          class="btn btn-outline-primary btn-sm float-start mb-4"
+          type="submit"
+          value="Сохранить данные"
+        />
+      </form>
+      {% endfor %}
+    </ul>
 
-<h1 class="text-center my-3">Список задач</h1>
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center my-3 border-bottom"></div>
-<form class="input-group mb-3" action="/add" method="post">
-    <input class="btn btn-outline-primary btn-sm" type="submit" value="Добавить задачу">
-    <input class="form-control" placeholder="Описание задачи" type="text" name="task">
-</form>
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center my-3 border-bottom"></div>
-<ul class="list-group">
-    {% for task in tasks %}
-    <li class="list-group-item mb-3 ">
-        {{ task }}
-        <a class="btn btn-outline-success btn-sm float-end" href="/complete/{{ loop.index0 }}">Отметить как выполненное</a>
-    </li>
-    <div class="input-group mb-3">
-        <span class="input-group-text" id="phone">Телефон</span>
-        <input type="text" class="form-control" placeholder="Найденный телефон" aria-describedby="phone">
-        <span class="input-group-text" id="email">E-mail</span>
-        <input type="text" class="form-control" placeholder="Найденный e-mail" aria-describedby="email">
-        <span class="input-group-text" id="nickname">Nickname</span>
-        <input type="text" class="form-control" placeholder="Найденный nickname" aria-describedby="nickname">
-        <span class="input-group-text" id="name">Ф.И.О.</span>
-        <input type="text" class="form-control" placeholder="Найденное Ф.И.О." aria-describedby="name">
-    </div>
-    <div class="input-group mb-3">
-        <span class="input-group-text text-wrap" style="width: 10rem" id="addinfo">Дополнительная информация</span>
-        <textarea type="text" rows="4" class="form-control" placeholder="Дополнительная информация" aria-describedby="addinfo"></textarea>
-    </div>
-    {% endfor %}
-</ul>
-<a class="btn btn-outline-primary btn-sm float-end" href="/archive">Просмотреть завершенные задачи</a>
-
-</body>
+    <a class="btn btn-outline-primary btn-sm float-end" href="/archive"
+      >Просмотреть завершенные задачи</a
+    >
+  </body>
+  <script type="text/javascript">
+    $("#addInfoForm").submit(function (eventObj) {
+      $(this).append(
+        '<input type="hidden" name="task" value="' +
+          $(".taskName").text() +
+          '"/>'
+      );
+      return true;
+    });
+  </script>
 </html>

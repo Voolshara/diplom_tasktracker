@@ -10,16 +10,22 @@ completed_tasks = []
 def index():
     return render_template('index.html', tasks=tasks)
 
-@app.route('/add', methods=['POST'])
+@app.route('/new', methods=['POST'])
 def add_task():
     task = request.form['task']
     tasks.append(task)
+    return redirect(url_for('index'))
+
+@app.route('/add_info', methods=['POST'])
+def add_task_info():
+    print(request.form)
     return redirect(url_for('index'))
 
 @app.route('/complete/<int:task_id>')
 def complete_task(task_id):
     completed_task = tasks.pop(task_id)
     completed_tasks.append(completed_task)
+    print(tasks, completed_tasks)
     return redirect(url_for('index'))
 
 @app.route('/archive')

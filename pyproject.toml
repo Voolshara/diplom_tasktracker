@@ -8,9 +8,14 @@ packages = [{include = "src"}]
 [tool.poetry.dependencies]
 python = "^3.10"
 Flask = "^2.2.3"
+SQLAlchemy = "^2.0.5"
+phonenumbers = "^8.13.7"
+python-dotenv = "^1.0.0"
+psycopg2-binary = "^2.9.5"
 
 [tool.poetry.scripts]
 server = "src.main:run"
+setup_db = "src.db:create_all_tables"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

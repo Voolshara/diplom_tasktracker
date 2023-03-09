@@ -58,18 +58,26 @@
         type="text"
         name="task"
       />
+      {% if is_task_exist %}
+      <p>Такой Task уже существует, выберите другое имя</p>
+      {% endif %}
     </form>
     <div
       class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center my-3 border-bottom"
     ></div>
     <ul class="list-group mb-5">
       {% for task in tasks %}
-      <form id="addInfoForm" action="/add_info" method="post">
+      <form
+        class="addInfoForm"
+        id="{{ task[0] }}"
+        action="/add_info"
+        method="post"
+      >
         <li class="list-group-item mb-3">
-          <p class="taskName">{{ task }}</p>
+          <p class="taskName">{{ task[1] }}</p>
           <a
             class="btn btn-outline-success btn-sm float-end"
-            href="/complete/{{ loop.index0 }}"
+            href="/complete/{{ task[0] }}"
             >Отметить как выполненное</a
           >
         </li>
@@ -81,6 +89,7 @@
             placeholder="Найденный телефон"
             aria-describedby="phone"
             name="phone"
+            value="{{ task[2] }}"
           />
           <span class="input-group-text" id="email">E-mail</span>
           <input
@@ -89,6 +98,7 @@
             placeholder="Найденный e-mail"
             aria-describedby="email"
             name="email"
+            value="{{ task[3] }}"
           />
           <span class="input-group-text" id="nickname">Nickname</span>
           <input
@@ -97,6 +107,7 @@
             placeholder="Найденный nickname"
             aria-describedby="nickname"
             name="Nickname"
+            value="{{ task[4] }}"
           />
           <span class="input-group-text" id="name">Ф.И.О.</span>
           <input
@@ -105,6 +116,7 @@
             placeholder="Найденное Ф.И.О."
             aria-describedby="name"
             name="name"
+            value="{{ task[5] }}"
           />
         </div>
         <div class="input-group mb-3">
@@ -121,8 +133,17 @@
             placeholder="Дополнительная информация"
             aria-describedby="addinfo"
             name="addinfo"
+            value="{{ task[6] }}"
           ></textarea>
         </div>
+        {% if task[7] %}
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="name"
+            >Информация из phonenumbers</span
+          >
+          <span class="input-group-text" id="name">{{ task[7] }}</span>
+        </div>
+        {% endif %}
         <input
           class="btn btn-outline-primary btn-sm float-start mb-4"
           type="submit"
@@ -137,11 +158,9 @@
     >
   </body>
   <script type="text/javascript">
-    $("#addInfoForm").submit(function (eventObj) {
+    $(".addInfoForm").submit(function (eventObj) {
       $(this).append(
-        '<input type="hidden" name="task" value="' +
-          $(".taskName").text() +
-          '"/>'
+        '<input type="hidden" name="task" value="' + $(this).attr("id") + '"/>'
       );
       return true;
     });

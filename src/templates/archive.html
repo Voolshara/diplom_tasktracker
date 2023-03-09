@@ -46,14 +46,42 @@
     ></div>
     <ul class="list-group">
       {% for task in completed_tasks %}
-      <li class="list-group-item">{{ task }}</li>
-      {% endfor %}
+      <li class="list-group-item mb-3">
+        <p class="taskName">{{ task[1] }}</p>
+      </li>
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="phone">Телефон</span>
+        <span class="form-control"> {{ task[2] }} </span>
+        <span class="input-group-text" id="email">E-mail</span>
+        <span class="form-control"> {{ task[3] }} </span>
+        <span class="input-group-text" id="nickname">Nickname</span>
+        <span class="form-control"> {{ task[4] }} </span>
+        <span class="input-group-text" id="name">Ф.И.О.</span>
+        <span class="form-control"> {{ task[5] }} </span>
+      </div>
+      <div class="input-group mb-3">
+        <span
+          class="input-group-text text-wrap"
+          style="width: 10rem"
+          id="addinfo"
+          >Дополнительная информация</span
+        >
+        <span class="form-control"> {{ task[6] }} </span>
+      </div>
+      {% if task[7] %}
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="name"
+          >Информация из phonenumbers</span
+        >
+        <span class="input-group-text" id="name">{{ task[7] }}</span>
+      </div>
+      {% endif %} {% endfor %}
     </ul>
     <a class="btn btn-outline-primary btn-sm float-end" href="/"
       >Вернуться к задачам</a
     >
 
-    <form action="/add" method="post">
+    <form action="/new" method="post">
       <div class="input-group mb-3">
         <input
           type="text"

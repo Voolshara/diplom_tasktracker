@@ -14,8 +14,8 @@ python-dotenv = "^1.0.0"
 psycopg2-binary = "^2.9.5"
 
 [tool.poetry.scripts]
-server = "src.main:run"
 setup_db = "src.db:create_all_tables"
+server = "src.main:run"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

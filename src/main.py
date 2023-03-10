@@ -1,4 +1,4 @@
-from src.db import check_task, new_task, get_all_running_tasks, get_now_phone, set_data, change_status, get_all_close_tasks
+from src.db import check_task, new_task, get_all_running_tasks, get_now_phone, set_data, change_status, get_all_close_tasks, create_all_tables
 
 from phonenumbers import parse as phone_parse
 from flask import Flask, render_template, request, redirect, url_for
@@ -51,4 +51,5 @@ def archive():
     return render_template('archive.html', completed_tasks=completed_tasks)
 
 def run():
+    create_all_tables()
     app.run("0.0.0.0", port="5000", debug=False)

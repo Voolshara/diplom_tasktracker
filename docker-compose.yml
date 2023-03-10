@@ -35,7 +35,7 @@ services:
       - "5000:5000"
 
   db_setup:
-    image: "app-base"
+    image: "server-base"
     command: "setup_db"
     env_file: ".env"
     network_mode: "host"

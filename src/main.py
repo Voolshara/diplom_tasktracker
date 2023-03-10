@@ -51,4 +51,4 @@ def archive():
     return render_template('archive.html', completed_tasks=completed_tasks)
 
 def run():
-    app.run(debug=False)
+    app.run("0.0.0.0", port="5000", debug=False)

@@ -19,3 +19,23 @@ services:
       PGADMIN_DEFAULT_PASSWORD: test
     ports:
       - "5050:80"
+
+  server_setup:
+    image: "server-base"
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+  server_start:
+    image: "server-base"
+    command: "server"
+    env_file: ".env"
+    restart: always
+    ports:
+      - "5000:5000"
+
+  db_setup:
+    image: "app-base"
+    command: "setup_db"
+    env_file: ".env"
+    network_mode: "host"
